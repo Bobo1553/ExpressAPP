@@ -46,9 +46,9 @@ public class LoginActivity extends AppCompatActivity implements i_LoginView
     SwitchCompat SwitchCompat_rememberpassword;
     SharedPreferences sharedPreferences;
     private double exitTime;
-    private iLoginPresenter iLogin;//我写的
+    private iLoginPresenter iLogin;
 
-    private Handler handler=new Handler(){//我写的
+    private Handler handler=new Handler(){
         public void handleMessage(android.os.Message msg) {
             if(msg.what==1)
             {
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements i_LoginView
         ActivityList.addActivity(LoginActivity.this);
         initViews();
 
-        iLogin=new PresenterCompl(this);//w
+        iLogin=new PresenterCompl(this);
 
         if(sharedPreferences.getBoolean("REMEMBER_PASSWORD", true))
         {
@@ -165,18 +165,7 @@ public class LoginActivity extends AppCompatActivity implements i_LoginView
             @Override
             public void onClick(View v)
             {
-                // String Login_result=new String();
-            /*    try
-                {
-
-                    Login_result=UploadUserInformationByPostService.save(EditText_username.getText().toString(), edittext_password.getText().toString());
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }*/
-                //onLoginRight();
-                iLogin.LoginJudge(handler);//我写的
+                iLogin.LoginJudge(handler);
             }
         });
     }
