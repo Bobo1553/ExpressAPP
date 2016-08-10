@@ -2,7 +2,9 @@ package example.com.expressapp.setting.presenter;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
+import example.com.expressapp.basispage.view.iBasisPage;
 import example.com.expressapp.setting.model.LogoutPostBack;
 import example.com.expressapp.setting.model.iLogoutPostBack;
 import example.com.expressapp.setting.view.iSetting;
@@ -11,7 +13,7 @@ import example.com.expressapp.setting.view.iSetting;
  * Created by lxs on 2016/5/17.
  */
 public class LogoutPresenterImpl implements iLogoutPresenter {
-    private iSetting iView;
+    private String guid;
     private iLogoutPostBack iPostBack;
     @Override
     public void LogoutJudge(final Handler handler) {
@@ -20,7 +22,7 @@ public class LogoutPresenterImpl implements iLogoutPresenter {
             public void run() {
                 String logoutResult=new String();
                 try {
-                    logoutResult = iPostBack.logout(iView.getGUID());
+                    logoutResult = iPostBack.logout(guid);
                 }
                 catch (Exception e)
                 {
@@ -35,7 +37,14 @@ public class LogoutPresenterImpl implements iLogoutPresenter {
     }
     public LogoutPresenterImpl(iSetting iView)
     {
-        this.iView=iView;
+        guid=iView.getGUID();
         this.iPostBack =new LogoutPostBack();
     }
+
+    public LogoutPresenterImpl(iBasisPage iView)
+    {
+        guid=iView.getGUID();
+        this.iPostBack=new LogoutPostBack();
+    }
+
 }

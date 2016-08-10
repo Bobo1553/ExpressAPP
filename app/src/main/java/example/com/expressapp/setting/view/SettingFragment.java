@@ -2,6 +2,7 @@ package example.com.expressapp.setting.view;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import org.apache.commons.logging.Log;
 
 import example.com.expressapp.R;
 import example.com.expressapp.adminGUID;
+import example.com.expressapp.login.view.LoginActivity;
 import example.com.expressapp.setting.presenter.LogoutPresenterImpl;
 import example.com.expressapp.setting.presenter.iLogoutPresenter;
 
@@ -23,13 +25,19 @@ import example.com.expressapp.setting.presenter.iLogoutPresenter;
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends Fragment implements iSetting{
-    private adminGUID guid;
+    private adminGUID mGuid;
     private iLogoutPresenter iLogout;
     private Handler handler=new Handler(){
         public void handleMessage(android.os.Message msg) {
             if(msg.what==1)
             {
-                android.util.Log.d("test",msg.obj.toString());
+                if(msg.obj.toString().equals("1")||msg.obj.toString().equals("2"))
+                {
+                    Intent intent=new Intent(SettingFragment.this.getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                else
+                    android.util.Log.d("test","Fail "+msg.obj.toString());
             }
         };
     };
@@ -37,11 +45,12 @@ public class SettingFragment extends Fragment implements iSetting{
     @Override
     public String getGUID()
     {
-        return guid.getGUID();
+        return mGuid.getGUID();
     }
 
-    public SettingFragment() {
+    public SettingFragment(adminGUID guid) {
         // Required empty public constructor
+        mGuid=guid;
     }
 
 
@@ -50,7 +59,6 @@ public class SettingFragment extends Fragment implements iSetting{
         // Inflate the layout for this fragment
         View thisView=inflater.inflate(R.layout.setting_fragment_layout,container,false);
         iLogout=new LogoutPresenterImpl(this);
-        guid=(adminGUID)getActivity().getApplication();
         Button button=(Button) thisView.findViewById(R.id.logout_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

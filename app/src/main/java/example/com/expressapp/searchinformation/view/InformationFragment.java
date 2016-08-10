@@ -22,7 +22,7 @@ public class InformationFragment extends Fragment implements iInformation{
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
-    private adminGUID guid;
+    private adminGUID mGuid;
     private iGetInfoPresenter iSearch;
     private ExpressInfoManager mExpressInfoManager;
     private Handler handler=new Handler()
@@ -39,14 +39,15 @@ public class InformationFragment extends Fragment implements iInformation{
         };
     };
 
-    public InformationFragment(ExpressInfoManager expressInfoManager) {
+    public InformationFragment(ExpressInfoManager expressInfoManager,adminGUID guid) {
         // Required empty public constructor
         this.mExpressInfoManager=expressInfoManager;
+        mGuid=guid;
     }
 
     public String getGUID()
     {
-        return guid.getGUID();
+        return mGuid.getGUID();
     }
 
     @Override
@@ -55,7 +56,6 @@ public class InformationFragment extends Fragment implements iInformation{
         // Inflate the layout for this fragment
         View thisView=inflater.inflate(R.layout.information_fragment_layout,container,false);
         iSearch=new GetInfoPresenterImpl(this);
-        guid=(adminGUID)this.getActivity().getApplication();
         iSearch.judgeGetLadingInfo(handler);
         return thisView;
     }

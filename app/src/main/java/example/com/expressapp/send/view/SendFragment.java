@@ -21,7 +21,7 @@ import example.com.expressapp.send.presenter.iUpdataLadingPresenter;
  */
 public class SendFragment extends Fragment implements iSend{
     private iUpdataLadingPresenter updataLading;
-    private adminGUID guid;
+    private adminGUID mGuid;
     private ExpressInfoManager mExpressInfoManager;
 
     private Handler handler=new Handler()
@@ -35,9 +35,10 @@ public class SendFragment extends Fragment implements iSend{
         }
     };
 
-    public SendFragment(ExpressInfoManager expressInfoManager) {
+    public SendFragment(ExpressInfoManager expressInfoManager,adminGUID guid) {
         // Required empty public constructor
         this.mExpressInfoManager=expressInfoManager;
+        mGuid=guid;
     }
 
 
@@ -46,9 +47,6 @@ public class SendFragment extends Fragment implements iSend{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View thisView=inflater.inflate(R.layout.send_fragment_layout,container,false);
-        for(int i=0;i<mExpressInfoManager.getExpressInfoList().size();i++)
-            Log.d("test2",mExpressInfoManager.getExpressInfoList().get(i).getIdNum());
-        guid=(adminGUID) this.getActivity().getApplication();
         updataLading=new UpdataLadingPresenterImpl(this);
         Button button=(Button) thisView.findViewById(R.id.updataLading_btn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +60,7 @@ public class SendFragment extends Fragment implements iSend{
 
     @Override
     public String getGUID() {
-        return guid.getGUID();
+        return mGuid.getGUID();
     }
 
     @Override

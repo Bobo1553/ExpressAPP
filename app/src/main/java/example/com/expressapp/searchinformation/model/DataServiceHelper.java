@@ -11,6 +11,7 @@ import java.util.List;
 public class DataServiceHelper {
     static public List<ExpressInfo> setData(String userInfo,List<ExpressInfo> expressInfoList)
     {
+        expressInfoList.clear();
         String data[]=userInfo.split("##");
         for(int i=0;i<data.length;i++)
         {
